@@ -1,8 +1,11 @@
-package main.java.hattabi.youness.web_app.entities;
+package hattabi.youness.web_app.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -14,9 +17,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private string name;
-    private string price;
+    @NotEmpty(message = "Product name cannot be empty")
+    private String name;
 
-    @Temporal(TemporalType.DATE)
-    private Date createdAt;
+    @Positive(message = "Price must be positive")
+    private double price;
+
+    @Min(value = 0, message = "Quantity cannot be negative")
+    private int quantity;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }
