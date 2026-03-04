@@ -2,11 +2,16 @@ package hattabi.youness.web_app.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
+import hattabi.youness.web_app.entities.Product;
 import hattabi.youness.web_app.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +27,22 @@ public class ProductController {
     @GetMapping("/deleteProduct")
     public String deleteProduct(@RequestParam Long id) {
         productRepository.deleteById(id);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/addProduct")
+    public String addProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "addProduct";
+    }
+
+    @PostMapping("/saveProduct")
+    public String saveProduct(@Valid Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addProduct";
+        }
+
+        productRepository.save(product);
         return "redirect:/products";
     }
 
