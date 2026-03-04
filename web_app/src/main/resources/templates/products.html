@@ -20,7 +20,8 @@
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Date</th>
+            <th>Created At</th>
+            <th>Updated At</th>
             <th sec:authorize="hasRole('ADMIN')">Actions</th>
           </tr>
         </thead>
@@ -32,7 +33,14 @@
             <td th:text="${p.quantity}"></td>
             <td
               th:text="${#temporals.format(p.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td
+              th:text="${p.updatedAt != null ? #temporals.format(p.updatedAt, 'yyyy-MM-dd HH:mm') : '-'}"></td>
             <td sec:authorize="hasRole('ADMIN')">
+              <a
+                th:href="@{/editProduct(id=${p.id})}"
+                class="btn btn-warning btn-sm">
+                Edit
+              </a>
               <a
                 th:href="@{/deleteProduct(id=${p.id})}"
                 class="btn btn-danger btn-sm"

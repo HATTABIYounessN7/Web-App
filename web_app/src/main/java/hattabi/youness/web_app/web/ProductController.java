@@ -45,4 +45,13 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    @GetMapping("/editProduct")
+    public String editProduct(@RequestParam Long id, Model model) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        model.addAttribute("product", product);
+        return "addProduct";
+    }
+
 }
