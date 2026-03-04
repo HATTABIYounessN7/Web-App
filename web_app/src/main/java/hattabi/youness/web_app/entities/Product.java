@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -26,10 +28,6 @@ public class Product {
     @Min(value = 0, message = "Quantity cannot be negative")
     private int quantity;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
 }
