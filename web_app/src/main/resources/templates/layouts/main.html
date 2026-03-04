@@ -1,7 +1,8 @@
 <!doctype html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <title layout:title-pattern="$CONTENT_TITLE - Demo Web App">
@@ -17,6 +18,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/products">Product Manager</a>
+        <div sec:authorize="isAuthenticated()" class="d-flex">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-outline-light btn-sm">
+              Logout
+            </button>
+          </form>
+        </div>
       </div>
     </nav>
 
