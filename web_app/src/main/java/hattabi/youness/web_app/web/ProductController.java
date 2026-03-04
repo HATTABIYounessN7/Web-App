@@ -1,5 +1,7 @@
 package hattabi.youness.web_app.web;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +20,17 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @GetMapping("/products")
-    public String products(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+    public String products(@RequestParam(required = false) String keyword, Model model) {
+        List<Product> productsList;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            productsList = productRepository.findByNameContainingIgnoreCase(keyword);
+        } else {
+            productsList = productRepository.findAll();
+        }
+
+        model.addAttribute("products", productsList);
+        model.addAttribute("keyword", keyword);
         return "products";
     }
 
