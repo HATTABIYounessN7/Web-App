@@ -1,13 +1,14 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/main}">
   <head>
     <title>Add Product</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   </head>
+
   <body>
-    <div class="container mt-4">
+    <div layout:fragment="content">
       <h2>Add New Product</h2>
 
       <form th:action="@{/saveProduct}" th:object="${product}" method="post">
